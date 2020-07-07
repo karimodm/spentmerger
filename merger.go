@@ -24,7 +24,7 @@ func main() {
 	argv := os.Args
 
 	if argc != 5 {
-		panic("Need to specify 3 params: BASEDIRECTORY DB1 DB2 MERGEDDB")
+		panic("Need to specify 4 params: BASEDIRECTORY DB1 DB2 MERGEDDB")
 	}
 
 	directory := argv[1]
@@ -57,10 +57,10 @@ func main() {
 	})
 
 	db2.View(func(tx *bbolt.Tx) error {
-		b := tx.Bucket([]byte{storePrefixSpentAddresses})
+		b := tx.Bucket(bucket)
 		b.ForEach(func(k, v []byte) error {
 			mergeddb.Update(func(tx *bbolt.Tx) error {
-				_b := tx.Bucket([]byte{storePrefixSpentAddresses})
+				_b := tx.Bucket(bucket)
 				_b.Put(k, v)
 				return nil
 			})
