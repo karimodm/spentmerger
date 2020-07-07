@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/iotaledger/hive.go/kvstore/bolt"
@@ -17,14 +16,6 @@ func boltDB(directory string, filename string) *bbolt.DB {
 		panic(err)
 	}
 	return db
-}
-
-type merger struct{}
-
-func (m merger) Write(p []byte) (int, error) {
-	fmt.Printf("Received: %s", p)
-	os.Exit(1)
-	return len(p), nil
 }
 
 func main() {
